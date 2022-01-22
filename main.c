@@ -71,6 +71,13 @@ void sequentialMatching(int j, int row, int col, char wordPuzzle[], Word words, 
         *found = true;
         posRowCol[idx/col][idx%col] = words.contents[idxWord-1];
     }
+    else{
+        for (int a = 0; a < row; a++){
+            for (int b = 0; b < col; b++){
+                posRowCol[a][b] = '-';
+            }
+        }
+    }
 }
 
 int main()
