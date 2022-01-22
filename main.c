@@ -26,50 +26,76 @@ void printAns(int row, int col, char posRowCol[row][col])
     }
 }
 
-int incIndex(int idx, int col, int dir)
+int incIndexRow(int row, int dir)
 {
     switch (dir)
     {
         case 1: // Timur
-            return (idx + 1); break;
+            return row; break;
         case 2: // Tenggara
-            return (idx + col + 1); break;
+            return (row+1); break;
         case 3: // Selatan
-            return (idx + col); break;
+            return (row+1); break;
         case 4: // Barat Daya
-            return (idx + col - 1); break;
+            return (row+1); break;
         case 5: // Barat
-            return (idx - 1); break;
+            return row; break;
         case 6: // Barat Laut
-            return (idx - col - 1); break;
+            return (row-1); break;
         case 7: // Utara
-            return (idx - col); break;
+            return (row-1); break;
         case 8: // Timur Laut
-            return (idx - col + 1); break;
+            return (row-1); break;
     }
+}
+
+int incIndexCol(int col, int dir)
+{
+    switch (dir)
+    {
+        case 1: // Timur
+            return (col+1); break;
+        case 2: // Tenggara
+            return (col+1); break;
+        case 3: // Selatan
+            return col; break;
+        case 4: // Barat Daya
+            return (col-1); break;
+        case 5: // Barat
+            return (col-1); break;
+        case 6: // Barat Laut
+            return (col-1); break;
+        case 7: // Utara
+            return col; break;
+        case 8: // Timur Laut
+            return (col+1); break;
+    };
 }
 
 void sequentialMatching(int j, int row, int col, char wordPuzzle[], Word words, boolean *found, char posRowCol[row][col], int dir, int *numCompare)
 {
-    /*
-    for(int j=0; j < words.length; j++){
-        printf("%c", words.contents[j]);
-    }
-    printf("\n");
-    */
-    int idx = j; // wordPuzzle index
+    // printf("%d\n\n", dir);
+    int idxRow = j/col; // wordPuzzle index
+    int idxCol = j%col;
     int idxWord = 1; // word content index
+    // printf("%d %d\n", idxRow, idxCol);
+    // printf("%d %d %d\n", incIndexRow(idxRow, dir), incIndexCol(idxCol, dir), (incIndexRow(idxRow, dir)*col)+incIndexCol(idxCol, dir));
 
-    while(incIndex(idx, col, dir) >= 0 && incIndex(idx, col, dir) <= ((row*col)-1) && wordPuzzle[incIndex(idx, col, dir)] == words.contents[idxWord] && words.length > idxWord && (!(*found))){
-        posRowCol[idx/col][idx%col] = words.contents[idxWord-1];
-        idx = incIndex(idx, col, dir);
+    while(incIndexCol(idxCol, dir) >= 0 && incIndexCol(idxCol, dir) < col && incIndexRow(idxRow, dir) >= 0 && incIndexRow(idxRow, dir) < row
+          && wordPuzzle[(incIndexRow(idxRow, dir)*col)+incIndexCol(idxCol, dir)] == words.contents[idxWord] && words.length > idxWord && (!(*found))){
+        posRowCol[idxRow][idxCol] = words.contents[idxWord-1];
+        // printf("before: %d %d\n", idxRow, idxCol);
+        idxRow = incIndexRow(idxRow, dir);
+        idxCol = incIndexCol(idxCol, dir);
+        // printf("after: %d %d\n", idxRow, idxCol);
         idxWord++;
     }
     *numCompare++;
     //printf("numCompare : %d\n", *numCompare);
     if (idxWord == words.length){
         *found = true;
-        posRowCol[idx/col][idx%col] = words.contents[idxWord-1];
+        posRowCol[idxRow][idxCol] = words.contents[idxWord-1];
+        // printf("%d %d\n", idxRow, idxCol);
     }
     else{
         for (int a = 0; a < row; a++){
@@ -228,7 +254,7 @@ int main()
             gettimeofday(&end, NULL);
             int ms_elapsed = ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
             long s_elapsed = (end.tv_sec - start.tv_sec);
-            printf("%d microseconds\n%d seconds", ms_elapsed, s_elapsed);
+            printf("%d microseconds\n%lld seconds", ms_elapsed, s_elapsed);
         }
         else{
             printf("Memory allocation unsuccessfull!");
