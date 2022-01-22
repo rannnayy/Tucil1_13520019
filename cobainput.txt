@@ -1,0 +1,13 @@
+A B C D E
+F G H I J
+K L M N O
+
+ABC
+BCD
+GHI
+KLM
+MNO
+FGHIJ
+LHD
+BHN
+CHM
