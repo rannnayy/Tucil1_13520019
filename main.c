@@ -9,7 +9,7 @@
 #define MARK_EOF EOF
 
 typedef struct {
-    char* contents; /* container penyimpan kata, indeks yang dipakai [0..CAPACITY-1] */
+    char* contents;
     int length;
 } Word;
 
@@ -74,28 +74,22 @@ int incIndexCol(int col, int dir)
 
 void sequentialMatching(int j, int row, int col, char wordPuzzle[], Word words, boolean *found, char posRowCol[row][col], int dir, int *numCompare)
 {
-    // printf("%d\n\n", dir);
     int idxRow = j/col; // wordPuzzle index
     int idxCol = j%col;
     int idxWord = 1; // word content index
-    // printf("%d %d\n", idxRow, idxCol);
-    // printf("%d %d %d\n", incIndexRow(idxRow, dir), incIndexCol(idxCol, dir), (incIndexRow(idxRow, dir)*col)+incIndexCol(idxCol, dir));
 
     while(incIndexCol(idxCol, dir) >= 0 && incIndexCol(idxCol, dir) < col && incIndexRow(idxRow, dir) >= 0 && incIndexRow(idxRow, dir) < row
           && wordPuzzle[(incIndexRow(idxRow, dir)*col)+incIndexCol(idxCol, dir)] == words.contents[idxWord] && words.length > idxWord && (!(*found))){
+
         posRowCol[idxRow][idxCol] = words.contents[idxWord-1];
-        // printf("before: %d %d\n", idxRow, idxCol);
         idxRow = incIndexRow(idxRow, dir);
         idxCol = incIndexCol(idxCol, dir);
-        // printf("after: %d %d\n", idxRow, idxCol);
         idxWord++;
     }
-    *numCompare++;
-    //printf("numCompare : %d\n", *numCompare);
+    (*numCompare)++;
     if (idxWord == words.length){
         *found = true;
         posRowCol[idxRow][idxCol] = words.contents[idxWord-1];
-        // printf("%d %d\n", idxRow, idxCol);
     }
     else{
         for (int a = 0; a < row; a++){
@@ -208,12 +202,13 @@ int main()
             //    Otherwise, move to another direction. Repeat until found or all directions have searched.
             //    If not found, continue iteration through wordPuzzle. Repeat step 1.
             // 3. If found, continue step 1 to another word. Repeat until all words have been found.
+
+            // Beginning of brute force algorithm. Start measuring execution time
             struct timeval start, end;
+            int ms_elapsed = 0;
 
-            gettimeofday(&start, NULL);
-
+            int numCompare = 0;
             for (int i = 0; i < numWord; i++){
-                int numCompare = 0;
                 int j = 0;
                 boolean found = false;
                 char posRowCol[row][col];
@@ -229,6 +224,7 @@ int main()
                 printf("\n");
 
                 while (j < charCtr && (!found)){
+                    gettimeofday(&start, NULL);
                     if(wordPuzzle[j] == words[i].contents[0]){
                         // First letter found
                         if (words[i].length == 1){ // One letter retrieved
@@ -239,22 +235,22 @@ int main()
                             int dir = 1;
                             while (!found && dir <= 8){
                                 sequentialMatching(j, row, col, wordPuzzle, words[i], &found, posRowCol, dir, &numCompare);
-                                //printf("ketemu atau nggak : %d\n", found);
                                 dir++;
                             }
                         }
                     }
+                    gettimeofday(&end, NULL);
+                    ms_elapsed += ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
+                    numCompare++;
                     j++;
                 }
                 // Finished searching a word
                 printAns(row, col, posRowCol);
                 printf("\n");
             }
-
-            gettimeofday(&end, NULL);
-            int ms_elapsed = ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
-            long s_elapsed = (end.tv_sec - start.tv_sec);
-            printf("%d microseconds\n%lld seconds", ms_elapsed, s_elapsed);
+            // Print Result
+            printf("\n%d microseconds ~ %.10f\n", ms_elapsed, ms_elapsed/10e6);
+            printf("\nNumber of comparations made: %d\n", numCompare);
         }
         else{
             printf("Memory allocation unsuccessfull!");
