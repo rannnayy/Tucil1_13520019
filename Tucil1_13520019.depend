@@ -1,11 +1,10 @@
 # depslib dependency file v1.0
-1642928313 source:c:\datas\projects\stima\tucil1_13520019\main.c
+1642933483 source:c:\datas\projects\stima\tucil1_13520019\main.c
 	<stdio.h>
 	<stdlib.h>
 	<sys/time.h>
 	<dirent.h>
 	<string.h>
-	"boolean.h"
 
 1642814515 c:\datas\projects\stima\tucil1_13520019\boolean.h
 

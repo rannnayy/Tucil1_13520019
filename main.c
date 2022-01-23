@@ -3,12 +3,15 @@
 #include <sys/time.h>
 #include <dirent.h>
 #include <string.h>
-#include "boolean.h"
 
 #define NEWLINE '\n'
 #define NULLCHAR '\0'
 #define BLANK ' '
 #define MARK_EOF EOF
+
+#define boolean unsigned char
+#define true 1
+#define false 0
 
 typedef struct {
     char* contents;
