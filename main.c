@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <dirent.h>
+#include <string.h>
 #include "boolean.h"
 
 #define NEWLINE '\n'
@@ -100,12 +102,59 @@ void sequentialMatching(int j, int row, int col, char wordPuzzle[], Word words, 
     }
 }
 
+void displayFile()
+{
+    DIR *dir;
+    char *p1, *p2;
+    int ret;
+    struct dirent *dirs;
+    dir = opendir(".");
+
+    int cnt = 0;
+
+    if(dir){
+        while((dirs = readdir(dir)) != NULL){
+            p1 = strtok(dirs->d_name, ".");
+            p2 = strtok(NULL, ".");
+
+            if(p2 != NULL){
+                ret = strcmp(p2, "txt");
+                if(ret == 0){
+                    cnt++;
+                    printf("%d. %s\n", cnt, strcat(strcat(p1, "."), "txt"));
+                }
+            }
+        }
+        closedir(dir);
+    }
+}
+
+void welcomeMsg()
+{
+    printf(" __          __           _    _____                     _       _____               _       \n");
+    printf(" \\ \\        / /          | |  / ____|                   | |     |  __ \\             | |      \n");
+    printf("  \\ \\  /\\  / /__  _ __ __| | | (___   ___  __ _ _ __ ___| |__   | |__) |   _ _______| | ___  \n");
+    printf("   \\ \\/  \\/ / _ \\| '__/ _` |  \\___ \\ / _ \\/ _` | '__/ __| '_ \\  |  ___/ | | |_  /_  / |/ _ \\ \n");
+    printf("    \\  /\\  / (_) | | | (_| |  ____) |  __/ (_| | | | (__| | | | | |   | |_| |/ / / /| |  __/  \n");
+    printf("     \\/  \\/ \\___/|_|  \\__,_| |_____/ \\___|\\__,_|_|  \\___|_| |_| |_|    \\__,_/___/___|_|\\___| \n");
+    printf("\n");
+    printf("Maharani Ayu Putri Irawan - 13520019\n");
+    printf("Tucil1_13520019\n\n");
+}
+
 int main()
 {
-    FILE *fp = fopen("cobainput.txt", "r");
+    char filename[50];
+
+    welcomeMsg();
+    printf("File yang tersedia:\n");
+    displayFile();
+    printf("\nMasukkan nama file (contoh: cobainput.txt) : ");
+    scanf("%[^\n]s", filename);
+    FILE *fp = fopen(filename, "r");
 
     if (fp == NULL){
-        printf("File tidak tersedia");
+        printf("File tidak tersedia!");
     }
     else{
         char* wordPuzzle;
@@ -251,6 +300,9 @@ int main()
             // Print Result
             printf("\n%d microseconds ~ %.10f\n", ms_elapsed, ms_elapsed/10e6);
             printf("\nNumber of comparations made: %d\n", numCompare);
+
+            free(wordPuzzle);
+            free(words);
         }
         else{
             printf("Memory allocation unsuccessfull!");
