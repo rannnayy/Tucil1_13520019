@@ -111,7 +111,7 @@ void displayFile()
     char *p1, *p2;
     int ret;
     struct dirent *dirs;
-    dir = opendir(".");
+    dir = opendir("./test");
 
     int cnt = 0;
 
@@ -152,7 +152,7 @@ int main()
     welcomeMsg();
     printf("File yang tersedia:\n");
     displayFile();
-    printf("\nMasukkan nama file (contoh: cobainput.txt) : ");
+    printf("\nMasukkan nama file (contoh: ./test/cobainput.txt) : ");
     scanf("%[^\n]s", filename);
     FILE *fp = fopen(filename, "r");
 
@@ -257,7 +257,9 @@ int main()
 
             // Beginning of brute force algorithm. Start measuring execution time
             struct timeval start, end;
+            clock_t startS, endS;
             int ms_elapsed = 0;
+            double s_elapsed = 0.0;
 
             int numCompare = 0;
             for (int i = 0; i < numWord; i++){
@@ -277,6 +279,7 @@ int main()
 
                 while (j < charCtr && (!found)){
                     gettimeofday(&start, NULL);
+                    startS = clock();
                     if(wordPuzzle[j] == words[i].contents[0]){
                         // First letter found
                         if (words[i].length == 1){ // One letter retrieved
@@ -292,7 +295,9 @@ int main()
                         }
                     }
                     gettimeofday(&end, NULL);
+                    endS = clock();
                     ms_elapsed += ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
+                    s_elapsed += (double)(endS - startS) / (double)(CLOCKS_PER_SEC);;
                     numCompare++;
                     j++;
                 }
@@ -301,7 +306,7 @@ int main()
                 printf("\n");
             }
             // Print Result
-            printf("\n%d microseconds ~ %.10f\n", ms_elapsed, ms_elapsed/10e6);
+            printf("\n%d microseconds ~ %lf\n", ms_elapsed, s_elapsed);
             printf("\nNumber of comparations made: %d\n", numCompare);
 
             free(wordPuzzle);

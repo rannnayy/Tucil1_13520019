@@ -1,5 +1,6 @@
 # Penyelesaian <i>Word Search Puzzle</i> dengan Algoritma <i>Brute Force</i>
 > Tugas Kecil 1 IF2121 Strategi Algoritma
+> Maharani Ayu Putri Irawan - 13520019 - K1
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -12,7 +13,6 @@
 * [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
 * [Contact](#contact)
-<!-- * [License](#license) -->
 
 
 ## General Information
@@ -44,18 +44,22 @@ Fitur yang terdapat dalam program ini antara lain:
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
+![SampleOutput](https://drive.google.com/uc?export=view&id=1lrmn1fB6NmKyrC7f4oY0GWBuLyEKEbIp/view?usp=sharing)
 
 
 ## Setup
-Program ini dibangun menggunakan bahasa C sehingga membutuhkan compiler yang dapat diinstal pada link <a href="https://sourceforge.net/projects/mingw/" alt="Link download installer MinGW">berikut</a>
+Program ini dibangun menggunakan bahasa C sehingga membutuhkan compiler yang dapat diinstal pada link <a href="https://sourceforge.net/projects/mingw/" alt="Link download installer MinGW">berikut</a>.
+Untuk menjalankan program, buka Code::Blocks (download installer melalui link <a href="https://www.codeblocks.org/downloads/">ini</a>). Lalu, download kode sumber dan extract. Buka project kode sumber, lalu tekan tombol "Build and run". Program akan berjalan dan menampilkan daftar file yang tersedia pada folder test. Masukkan input file dengan diawali
+
+`./test/`
+
+Lalu program akan mencari solusi word search puzzle pada file yang dimaksudkan. Hasil pencarian akan ditampilkan untuk setiap kata yang dicari. Di akhir akan ditampilkan waktu eksekusi yang diperlukan serta jumlah perbandingan yang dilakukan.
 
 
 ## Usage
 Saat program dijalankan, user akan diminta untuk memasukkan nama file yang berisi puzzle yang hendak diselesaikan. Contoh input yang valid adalah sebagai berikut:
 
-`cobainput.txt`
+`./test/cobainput.txt`
 
 Setelahnya, program akan secara otomatis mencari solusi puzzle yang dipilih menggunakan algoritma ,<i>brute force</i>.
 
@@ -82,3 +86,5 @@ Ucapan terima kasih hendak saya sampaikan kepada:
 
 ## Contact
 Created by [@rannnayy](https://github.com/rannnayy) - feel free to contact me!
+
+<b>Maharani Ayu Putri Irawan - 13520019 - K1</b>
