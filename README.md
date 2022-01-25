@@ -44,7 +44,7 @@ Fitur yang terdapat dalam program ini antara lain:
 
 
 ## Screenshots
-![SampleOutput](https://drive.google.com/uc?export=view&id=1lrmn1fB6NmKyrC7f4oY0GWBuLyEKEbIp/view?usp=sharing)
+![SampleOutput](https://drive.google.com/uc?export=view&id=1lrmn1fB6NmKyrC7f4oY0GWBuLyEKEbIp)
 
 
 ## Setup
